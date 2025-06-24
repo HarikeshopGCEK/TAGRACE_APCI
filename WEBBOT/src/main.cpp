@@ -136,6 +136,12 @@ void handleStop()
 }
 void setup()
 {
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
   // put your setup code here, to run once:
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, pass);
