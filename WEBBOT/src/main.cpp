@@ -58,8 +58,8 @@ void stop()
   analogWrite(ENB, 0);
 }
 
-char ssid[] = "your-SSID";     // your network SSID (name)
-char pass[] = "your-PASSWORD"; // your network password
+char ssid[] = "SREEHARI";  // your network SSID (name)
+char pass[] = "447643899"; // your network password
 
 ESP8266WebServer server(80);
 String html = "<html><head><title>GCEK APCI</title>"
@@ -136,18 +136,30 @@ void handleStop()
 }
 void setup()
 {
-  // put your setup code here, to run once:
-  WiFi.mode(WIFI_AP);
-  WiFi.softAP(ssid, pass);
-
+  // Connect to WiFi network as a station
+  pinMode(LM1, OUTPUT);
+  pinMode(LM2, OUTPUT);
+  pinMode(RM1, OUTPUT);
+  pinMode(RM2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
   Serial.begin(115200);
-  Serial.println("WiFi Access Point started");
-  Serial.print("AP IP address: ");
-  Serial.println(WiFi.softAPIP());
-  Serial.print("AP SSID: ");
-  Serial.println(WiFi.softAPSSID());
-  Serial.print("AP Password: ");
-  Serial.println(WiFi.softAPPSK());
+  Serial.println();
+  Serial.println("Connecting to WiFi...");
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
+
+  // Wait for connection
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.println("WiFi connected");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
 
   server.on("/", handleRoot);
   server.on("/forward", handleForward);
